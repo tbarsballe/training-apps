@@ -50,11 +50,6 @@ var modal = $('<div class="modal fade">' +
 app.LayersControl = function(opt_options) {
   this.defaultGroup = "default";
   var options = opt_options || {};
-  var popup = new app.Popup({
-    element: document.getElementById('popup'),
-    closeBox: true,
-    autoPan: false
-  });
   var element = document.createElement('div');
   element.className = 'layers-control ol-unselectable';
   if (options.groups) {
@@ -74,9 +69,8 @@ app.LayersControl = function(opt_options) {
       $(header).addClass('ul-header').html(this.groups[group].title);
       if (group != "background") {
         $('<a/>').addClass('link').addClass('link-add').html('+')
-          .click([map, group], function(evt) {
-            var map = evt.data[0];
-            var group = evt.data[1];
+          .click([group], function(evt) {
+            var group = evt.data[0];
             //request layer list from geoserver
             $.ajax({
               url: '/geoserver/ows?service=wms&request=GetCapabilities',
@@ -100,14 +94,36 @@ app.LayersControl = function(opt_options) {
                   
                   //todo: nested layer group
                   
-                  $('<li />').html(name.text()).appendTo(layerList);
+                  $('<li />').html(name.text()).click([group, name], function(evt) {
+                    var group = evt.data[0];
+                    var name = evt.data[1];
+
+                    modal.modal("hide");
+                    //modal.remove();
+
+                    var wmsSource = new ol.source.TileWMS({
+                      url: '/geoserver/ows?',
+                      params: {'LAYERS': name.text(), 'TILED': true},
+                      serverType: 'geoserver'
+                    });
+
+                    var layer = new ol.layer.Tile({
+                      title: name,
+                      source: wmsSource
+                    });
+
+                    var layers = map.getLayers().getArray();
+                    layers.push(layer);
+                    createMap(layers);
+
+                  }).appendTo(layerList);
                 }
 
                 modal.find('.modal-body').empty();
                 modal.find('.modal-body').append(layerList);
                 $('body').append(modal);
-                modal.modal();
-                modal.show();
+                modal.modal("show");
+                //modal.show();
 
               }
             });
