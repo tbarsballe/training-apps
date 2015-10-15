@@ -77,51 +77,84 @@ app.LayersControl = function(opt_options) {
               url: '/geoserver/ows?service=wms&request=GetCapabilities',
               success: function(data) {
                 var xml = $(data);
-                var layers = xml.find('Layer');
+                var layers = xml.find('Capability > Layer > Layer');
 
-                var layerList = $('<ul/>');
+                var layerList = $('<ul/>').html("Layers");
+                var layerGroupList = $('<ul/>').html("Layer Groups");
 
-                for (var i = 1; i < layers.length; i++) {
-                  var name = $(layers[i]).find('Name')
+                var addToList = function(evt) {
+                  var group = evt.data[0];
+                  var name = evt.data[1];
+
+                  modal.modal("hide");
+                  //modal.remove();
+
+                  var wmsSource = new ol.source.TileWMS({
+                    url: '/geoserver/ows?',
+                    params: {'LAYERS': name.text(), 'TILED': true},
+                    serverType: 'geoserver'
+                  });
+
+                  var layer = new ol.layer.Tile({
+                    title: name,
+                    source: wmsSource
+                  });
+
+                  var layers = map.getLayers().getArray();
+                  layers.push(layer);
+                  createMap(layers);
+
+                };
+
+                for (var i = 0; i < layers.length; i++) {
+                  var name = $(layers[i]).find('Name');
                   if (name && name.length) {
                     name = $(name[0]);
                   }
+                  var li = $('<li />').html(name.text()).click([group, name], addToList);
 
+                  //Handle layer groups
                   var abstract = $(layers[i]).find('Abstract');
                   if (abstract && abstract.text().startsWith('Layer-Group')) {
 
+                    /*
+                    //Handle nested layers
+                    var subLayers = $(layers[i]).children('Layer');
+                    if (subLayers && subLayers.length && subLayers.length > 0) {
+                      //TODO: make colapsible
+                      var subLayersElement = $('<ul/>');
+                      for (var j = 0; j < subLayers.length; j++) {
+                        var subLayerName = $(subLayers[j]).find('Name');
+                        if (subLayerName && subLayerName.length) {
+                          subLayerName = $(subLayerName[0]);
+                        }
+                        $('<li />').html(subLayerName.text()).appendTo(subLayersElement);
+                      }
+                      subLayersElement.appendTo(li);
+                    }
+                    */
+                    
+                    li.appendTo(layerGroupList);
+                  } else {
+                    li.appendTo(layerList);
                   }
 
                   
                   //todo: nested layer group
                   
-                  $('<li />').html(name.text()).click([group, name], function(evt) {
-                    var group = evt.data[0];
-                    var name = evt.data[1];
-
-                    modal.modal("hide");
-                    //modal.remove();
-
-                    var wmsSource = new ol.source.TileWMS({
-                      url: '/geoserver/ows?',
-                      params: {'LAYERS': name.text(), 'TILED': true},
-                      serverType: 'geoserver'
-                    });
-
-                    var layer = new ol.layer.Tile({
-                      title: name,
-                      source: wmsSource
-                    });
-
-                    var layers = map.getLayers().getArray();
-                    layers.push(layer);
-                    createMap(layers);
-
-                  }).appendTo(layerList);
+                  
                 }
 
                 modal.find('.modal-body').empty();
-                modal.find('.modal-body').append(layerList);
+                if (layerGroupList.children().length > 0) {
+                  modal.find('.modal-body').append(layerGroupList);
+                }
+                if (layerList.children().length > 0) {
+                  modal.find('.modal-body').append(layerList);
+                }
+                if (layerGroupList.children().length == 0 && layerList.children().length == 0) {
+                  modal.find('.modal-body').html('No layers available');
+                }
                 $('body').append(modal);
                 modal.modal("show");
                 //modal.show();
