@@ -1,5 +1,4 @@
 .layers-control {
-  padding-top: 5px;
   border-radius: 5px;
   position: absolute;
   right: 10px;
@@ -9,6 +8,37 @@
 .layers-control ul {
   font-weight: bold;
   list-style-type: none;
+  padding: 0px;
+}
+.layers-control ul:first-of-type div.ul-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.layers-control ul:first-of-type div.ul-header a.link {
+  border-top-right-radius: 5px;
+}
+div.ul-header {
+  padding: 3px 0px 3px 10px;
+  color: #ffffff;
+  background-color: #28728d;
+}
+a.link {
+  margin-top: -3px;
+  float: right;
+  color: #ffffff;
+  padding: 3px 10px;
+}
+a.link:hover {
+  text-decoration: none;
+  cursor:pointer;
+}
+a.link-add {
+  background-color: rgba(92,184,92,0.0);
+}
+a.link-add:hover {
+  background-color: rgba(92,184,92,0.5);
+}
+.layers-control li {
   padding-left: 10px;
   padding-right: 10px;
 }

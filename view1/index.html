@@ -25,15 +25,30 @@
       body {
         padding-top: 50px;
       }
+      .navbar {
+        background-color: #28728d;
+      }
+      a#toolsDrop {
+        background-color: #28728d;
+      }
       .navbar .navbar-brand {
         font-weight: bold;
         font-size: 25px;
         color: white;
       }
+      .navbar .navbar-nav {
+        float: right;
+      }
+
+      .navbar .dropdown-menu {
+        left: auto;
+        right: 0px;
+      }
       #popup-content {
         max-height: 200px;
         overflow-y: auto;
       }
+      
     </style>
     <script src="src/ol3/ol-debug.js"></script>
     <script src="src/jquery/jquery.js"></script>
@@ -62,8 +77,7 @@
       </div><!--/.navbar-collapse -->
     </div>
     <div id="map">
-      <div id="popup" class="ol-popup">
-      </div>
+      <div id="popup" class="ol-popup"></div>
     </div>
     <script src="lib/app.js"></script>
   </body>

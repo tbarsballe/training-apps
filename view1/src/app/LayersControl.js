@@ -2,6 +2,18 @@ if (!window.app) {
   window.app = {};
 }
 var app = window.app;
+var modal = $('<div class="modal fade">' +
+                '<div class="modal-dialog">' +
+                  '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                      '<h4 class="modal-title">Modal title</h4>' +
+                    '</div>' +
+                    '<div class="modal-body">' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>');
 
 /**
  * @class
@@ -38,6 +50,11 @@ var app = window.app;
 app.LayersControl = function(opt_options) {
   this.defaultGroup = "default";
   var options = opt_options || {};
+  var popup = new app.Popup({
+    element: document.getElementById('popup'),
+    closeBox: true,
+    autoPan: false
+  });
   var element = document.createElement('div');
   element.className = 'layers-control ol-unselectable';
   if (options.groups) {
@@ -53,7 +70,12 @@ app.LayersControl = function(opt_options) {
   for (var group in this.groups) {
     this.containers[group] = document.createElement('ul');
     if (this.groups[group].title) {
-      $(this.containers[group]).html(this.groups[group].title);
+      var header = document.createElement('div');
+      $(header).addClass('ul-header').html(this.groups[group].title);
+      if (group != "background") {
+        $('<a/>').addClass('link').addClass('link-add').html('+').appendTo(header);
+      }
+      this.containers[group].appendChild(header);
     }
     element.appendChild(this.containers[group]);
   }
@@ -73,10 +95,27 @@ ol.inherits(app.LayersControl, ol.control.Control);
 app.LayersControl.prototype.setMap = function(map) {
   ol.control.Control.prototype.setMap.call(this, map);
   var layers = map.getLayers().getArray();
+  //TODO: Add "none" basemap
+  var title = "None";
+  var group = "background";
+  var item = document.createElement('li');
+  $('<input />', {type: 'radio', name: group, value: title, checked:false}).
+    change([map, group], function(evt) {
+      var map = evt.data[0];
+      var layers = map.getLayers().getArray();
+      for (var i=0, ii=layers.length; i<ii; ++i) {
+        if (layers[i].get("group") == evt.data[1]) {
+          layers[i].setVisible(false);
+        }
+      }
+    }).appendTo(item);
+  $('<span />').html(title).appendTo(item);
+  this.containers[group].appendChild(item);
+
   for (var i=0, ii=layers.length; i < ii; ++i) {
     var layer = layers[i];
-    var title = layer.get('title');
-    var group = layer.get('group') || this.defaultGroup;
+    title = layer.get('title');
+    group = layer.get('group') || this.defaultGroup;
     if (title) {
       var item = document.createElement('li');
       if (this.groups[group] && this.groups[group].exclusive === true) {
