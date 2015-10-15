@@ -73,7 +73,45 @@ app.LayersControl = function(opt_options) {
       var header = document.createElement('div');
       $(header).addClass('ul-header').html(this.groups[group].title);
       if (group != "background") {
-        $('<a/>').addClass('link').addClass('link-add').html('+').appendTo(header);
+        $('<a/>').addClass('link').addClass('link-add').html('+')
+          .click([map, group], function(evt) {
+            var map = evt.data[0];
+            var group = evt.data[1];
+            //request layer list from geoserver
+            $.ajax({
+              url: '/geoserver/ows?service=wms&request=GetCapabilities',
+              success: function(data) {
+                var xml = $(data);
+                var layers = xml.find('Layer');
+
+                var layerList = $('<ul/>');
+
+                for (var i = 1; i < layers.length; i++) {
+                  var name = $(layers[i]).find('Name')
+                  if (name && name.length) {
+                    name = $(name[0]);
+                  }
+
+                  var abstract = $(layers[i]).find('Abstract');
+                  if (abstract && abstract.text().startsWith('Layer-Group')) {
+
+                  }
+
+                  
+                  //todo: nested layer group
+                  
+                  $('<li />').html(name.text()).appendTo(layerList);
+                }
+
+                modal.find('.modal-body').empty();
+                modal.find('.modal-body').append(layerList);
+                $('body').append(modal);
+                modal.modal();
+                modal.show();
+
+              }
+            });
+          }).appendTo(header);
       }
       this.containers[group].appendChild(header);
     }
