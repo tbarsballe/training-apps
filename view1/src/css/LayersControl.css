@@ -17,15 +17,31 @@
 .layers-control ul:first-of-type div.ul-header a.link {
   border-top-right-radius: 5px;
 }
+.layers-control ul.group-background li {
+  padding-right: 10px;
+}
+.layers-control ul.group-default span {
+  padding-right: 30px;
+}
+.layers-control ul.group-default li a.link {
+  position: absolute;
+  right: 0px;
+}
+.layers-control ul.group-default li:last-of-type a.link {
+  border-bottom-right-radius: 5px;
+}
+.layers-control ul.group-default {
+  margin-bottom: 5px;
+}
 div.ul-header {
   padding: 3px 0px 3px 10px;
   color: #ffffff;
   background-color: #28728d;
 }
 a.link {
-  margin-top: -3px;
+  font: 12px;
+  font-weight: bold;
   float: right;
-  color: #ffffff;
   padding: 3px 10px;
 }
 a.link:hover {
@@ -33,14 +49,22 @@ a.link:hover {
   cursor:pointer;
 }
 a.link-add {
+  margin-top: -3px;
+  color: #ffffff;
   background-color: rgba(92,184,92,0.0);
 }
 a.link-add:hover {
   background-color: rgba(92,184,92,0.5);
 }
+a.link-rm {
+  color: #000000;
+  background-color: rgba(255,84,84,0.0);
+}
+a.link-rm:hover {
+  background-color: rgba(255,84,84,0.5);
+}
 .layers-control li {
   padding-left: 10px;
-  padding-right: 10px;
 }
 .layers-control span {
   font: 12px/1.5 Arial, Helvetica, sans-serif;

@@ -64,11 +64,12 @@ app.LayersControl = function(opt_options) {
   this.containers = {};
   for (var group in this.groups) {
     this.containers[group] = document.createElement('ul');
+    $(this.containers[group]).addClass('group-'+group);
     if (this.groups[group].title) {
       var header = document.createElement('div');
       $(header).addClass('ul-header').html(this.groups[group].title);
       if (group != "background") {
-        $('<a/>').addClass('link').addClass('link-add').html('+')
+        $('<a class="link link-add"/>').html('+')
           .click([group], function(evt) {
             var group = evt.data[0];
             //request layer list from geoserver
@@ -199,6 +200,19 @@ app.LayersControl.prototype.setMap = function(map) {
         } else if (this.containers[this.defaultGroup]) {
           this.containers[this.defaultGroup].appendChild(item);
         }
+        //Delete button
+        $('<a class="link link-rm"/>').html('-').click([layer], function(evt) {
+          var layer = evt.data[0];
+          var layers = map.getLayers().getArray();
+          for (var i = 0; i < layers.length; i++) {
+            if (layers[i] == layer) {
+              layers.splice(i, 1);
+              break;
+            }
+          }
+          createMap(layers);
+
+        }).appendTo(item);
       }
     }
   }
