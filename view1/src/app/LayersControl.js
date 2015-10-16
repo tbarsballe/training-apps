@@ -2,12 +2,12 @@ if (!window.app) {
   window.app = {};
 }
 var app = window.app;
-var modal = $('<div class="modal fade">' +
+var modal = $('<div class="modal modal-layerlist fade">' +
                 '<div class="modal-dialog">' +
                   '<div class="modal-content">' +
                     '<div class="modal-header">' +
                       '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                      '<h4 class="modal-title">Modal title</h4>' +
+                      '<h4 class="modal-title">Add Layer</h4>' +
                     '</div>' +
                     '<div class="modal-body">' +
                     '</div>' +
@@ -133,7 +133,7 @@ app.LayersControl = function(opt_options) {
                       subLayersElement.appendTo(li);
                     }
                     */
-                    
+
                     li.appendTo(layerGroupList);
                   } else {
                     li.appendTo(layerList);

@@ -70,3 +70,25 @@ a.link-rm:hover {
   font: 12px/1.5 Arial, Helvetica, sans-serif;
   padding: 5px;
 }
+.modal-layerlist div.modal-header {
+  color: #ffffff;
+  background-color: #28728d;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.modal-layerlist ul {
+  padding-left: 20px;
+  font-weight: bold;
+  list-style-type: none;
+}
+.modal-layerlist ul > li {
+  padding-left: 10px;
+  font-weight: normal;
+}
+.modal-layerlist ul > li:hover {
+  padding-left: 10px;
+  font-weight: normal;
+  text-decoration: underline;
+  color: #28728d;
+  cursor: pointer;
+}
