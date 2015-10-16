@@ -96,12 +96,14 @@ app.LayersControl = function(opt_options) {
                   });
 
                   var layer = new ol.layer.Tile({
-                    title: name,
+                    title: name.text(),
+                    name: name.text(),
                     source: wmsSource
                   });
 
                   var layers = map.getLayers().getArray();
-                  layers.push(layer);
+                  //Insert before the 'highlight' layer
+                  layers.splice(layers.length-1, 0, layer);
                   createMap(layers);
 
                 };
