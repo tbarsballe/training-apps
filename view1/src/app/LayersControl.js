@@ -80,11 +80,11 @@ app.LayersControl = function(opt_options) {
                 var layers = xml.find('Capability > Layer > Layer');
 
                 var layerList = $('<ul/>').html("Layers");
-                var layerGroupList = $('<ul/>').html("Layer Groups");
 
                 var addToList = function(evt) {
                   var group = evt.data[0];
                   var name = evt.data[1];
+                  var title = evt.data[2];
 
                   modal.modal("hide");
                   //modal.remove();
@@ -96,7 +96,7 @@ app.LayersControl = function(opt_options) {
                   });
 
                   var layer = new ol.layer.Tile({
-                    title: name.text(),
+                    title: title.text(),
                     name: name.text(),
                     source: wmsSource
                   });
@@ -113,33 +113,41 @@ app.LayersControl = function(opt_options) {
                   if (name && name.length) {
                     name = $(name[0]);
                   }
-                  var li = $('<li />').html(name.text()).click([group, name], addToList);
-
-                  //Handle layer groups
-                  var abstract = $(layers[i]).find('Abstract');
-                  if (abstract && abstract.text().startsWith('Layer-Group')) {
-
-                    /*
-                    //Handle nested layers
-                    var subLayers = $(layers[i]).children('Layer');
-                    if (subLayers && subLayers.length && subLayers.length > 0) {
-                      //TODO: make colapsible
-                      var subLayersElement = $('<ul/>');
-                      for (var j = 0; j < subLayers.length; j++) {
-                        var subLayerName = $(subLayers[j]).find('Name');
-                        if (subLayerName && subLayerName.length) {
-                          subLayerName = $(subLayerName[0]);
-                        }
-                        $('<li />').html(subLayerName.text()).appendTo(subLayersElement);
-                      }
-                      subLayersElement.appendTo(li);
-                    }
-                    */
-
-                    li.appendTo(layerGroupList);
-                  } else {
-                    li.appendTo(layerList);
+                  var title = $(layers[i]).find('Title');
+                  if (title && title.length) {
+                    title = $(title[0]);
                   }
+                    
+                  //Handle nested layers (layer groups)
+                  var subLayers = $(layers[i]).children('Layer');
+                  if (subLayers && subLayers.length && subLayers.length > 0) {
+                    //TODO: make colapsible
+                    var subLayersElement = $('<ul/>');
+                    for (var j = 0; j < subLayers.length; j++) {
+                      var subLayerName = $(subLayers[j]).find('Name');
+                      if (subLayerName && subLayerName.length) {
+                        subLayerName = $(subLayerName[0]);
+                      }
+                      var subLayerTitle = $(subLayers[i]).find('Title');
+                      if (subLayerTitle && subLayerTitle.length) {
+                        subLayerTitle = $(subLayerTitle[0]);
+                      }
+                      var sli = $('<li title="'+subLayerName.text()+'"/>').html('<i class="fa fa-file-o"></i>');
+                      $(sli).appendTo(subLayersElement);
+                      $('<span/>').html(subLayerTitle.text()).click([group, subLayerName, subLayerTitle], addToList).appendTo(sli);
+                    }
+
+                    li = $('<li title="'+name.text()+'"/>');
+                    $('<i class="fa fa-folder-open-o"></i>').click(function() {
+                      $(this).toggleClass('fa-folder-open-o fa-folder-o');
+                    }).appendTo(li);
+                    $('<span/>').html(title.text()).appendTo(li).click([group, name, title], addToList).appendTo(li);
+                    subLayersElement.appendTo(li);
+                  } else {
+                    li = $('<li title="'+name.text()+'"/>').html('<i class="fa fa-file-o"></i>');
+                    $('<span/>').html(title.text()).appendTo(li).click([group, name, title], addToList).appendTo(li);
+                  }
+                  li.appendTo(layerList);
 
                   
                   //todo: nested layer group
@@ -148,13 +156,9 @@ app.LayersControl = function(opt_options) {
                 }
 
                 modal.find('.modal-body').empty();
-                if (layerGroupList.children().length > 0) {
-                  modal.find('.modal-body').append(layerGroupList);
-                }
                 if (layerList.children().length > 0) {
                   modal.find('.modal-body').append(layerList);
-                }
-                if (layerGroupList.children().length == 0 && layerList.children().length == 0) {
+                } else {
                   modal.find('.modal-body').html('No layers available');
                 }
                 $('body').append(modal);
@@ -204,6 +208,7 @@ app.LayersControl.prototype.setMap = function(map) {
 
   for (var i=0, ii=layers.length; i < ii; ++i) {
     var layer = layers[i];
+    var name = layer.get('name');
     title = layer.get('title');
     group = layer.get('group') || this.defaultGroup;
     if (title) {
@@ -229,7 +234,7 @@ app.LayersControl.prototype.setMap = function(map) {
           change(layer, function(evt) {
             evt.data.setVisible($(this).is(':checked'));
           }).appendTo(item);
-        $('<span />').html(title).appendTo(item);
+        $('<span title="'+name+'"/>').html(title).appendTo(item);
         if (this.containers[group]) {
           this.containers[group].appendChild(item);
         } else if (this.containers[this.defaultGroup]) {

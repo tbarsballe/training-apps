@@ -85,10 +85,19 @@ a.link-rm:hover {
   padding-left: 10px;
   font-weight: normal;
 }
-.modal-layerlist ul > li:hover {
-  padding-left: 10px;
+.modal-layerlist ul > li > span:hover {
   font-weight: normal;
   text-decoration: underline;
   color: #28728d;
   cursor: pointer;
+}
+i.fa {
+  margin-right: 5px;
+}
+i.fa-folder-open-o:hover, i.fa-folder-o:hover {
+  color: #28728d;
+  cursor: pointer;
+}
+i.fa-folder-o ~ ul {
+  display: none;
 }
