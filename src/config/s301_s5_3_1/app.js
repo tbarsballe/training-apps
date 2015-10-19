@@ -11,6 +11,24 @@ var url = '/geoserver/ows?';
 var srsName = 'EPSG:900913';
 var center = [-10764594.758211, 4523072.3184791];
 var zoom = 3;
+var infoFormat = 'application/vnd.ogc.gml/3.1.1'; // can also be 'text/html'
+
+var layers = [
+    //OSM
+    new ol.layer.Tile({
+      title: 'OpenStreetMap',
+      group: "background",
+      source: new ol.source.OSM()}),
+    // MapQuest streets
+    new ol.layer.Tile({
+      title: 'MapQuest Street Map',
+      group: "background",
+      source: new ol.source.MapQuest({layer: 'osm'})
+    }),
+    getHighlightLayer()
+  ]
+var overlays = [popup];
+var registrationFunctions = [registerPopup];
 
 
 // override the axis orientation for WMS GetFeatureInfo
@@ -22,19 +40,6 @@ ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
 // =========================================================================
 
 $("span.app-title").html("SU301 Section 5.3: Basemaps");
-createMap([
-  //OSM
-  new ol.layer.Tile({
-    title: 'OpenStreetMap',
-    group: "background",
-    source: new ol.source.OSM()}),
-  // MapQuest streets
-  new ol.layer.Tile({
-    title: 'MapQuest Street Map',
-    group: "background",
-    source: new ol.source.MapQuest({layer: 'osm'})
-  }),
-  highlight
-]);
+createMap(layers, overlays, registrationFunctions);
 
 

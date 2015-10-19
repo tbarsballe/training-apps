@@ -104,7 +104,7 @@ app.LayersControl = function(opt_options) {
                   var layers = map.getLayers().getArray();
                   //Insert before the 'highlight' layer
                   layers.splice(layers.length-1, 0, layer);
-                  createMap(layers);
+                  createMap(layers, overlays, registrationFunctions);
 
                 };
 
@@ -250,7 +250,7 @@ app.LayersControl.prototype.setMap = function(map) {
               break;
             }
           }
-          createMap(layers);
+          createMap(layers, overlays, registrationFunctions);
 
         }).appendTo(item);
       }
