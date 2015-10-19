@@ -1,5 +1,5 @@
 /**
- * S301 S1.5
+ * S301 S5.3 - 1
  *
  * @require Popup.js
  * @require LayersControl.js
@@ -21,8 +21,13 @@ var proj = new ol.proj.Projection({
 ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
 // =========================================================================
 
-$("span.app-title").html("SU301 Section 1.5: Introduction");
+$("span.app-title").html("SU301 Section 5.3: Basemaps");
 createMap([
+  //OSM
+  new ol.layer.Tile({
+    title: 'OpenStreetMap',
+    group: "background",
+    source: new ol.source.OSM()}),
   // MapQuest streets
   new ol.layer.Tile({
     title: 'MapQuest Street Map',
