@@ -9,24 +9,12 @@
 // 1. background, which will use radio buttons
 // 2. default (overlays), which will use checkboxes
 var map = {};
-var createMap = function (layers, overlays, registrationFunctions) {
+var createMap = function (layers, controls, overlays, registrationFunctions) {
   if (map.getViewport && map.getViewport()) {
     map.getViewport().remove();
   }
   map = new ol.Map({
-    controls: ol.control.defaults().extend([
-      new app.LayersControl({
-        groups: {
-          background: {
-            title: "Base Layers",
-            exclusive: true
-          },
-          'default': {
-            title: "Overlays"
-          }
-        }
-      })
-    ]),
+    controls: ol.control.defaults().extend(controls),
     // add the popup as a map overlay
     overlays: overlays,
     // render the map in the 'map' div

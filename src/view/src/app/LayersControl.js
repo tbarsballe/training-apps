@@ -103,8 +103,9 @@ app.LayersControl = function(opt_options) {
 
                   var layers = map.getLayers().getArray();
                   //Insert before the 'highlight' layer
+                  //TODO: Fix to insert before all meta layers, based on count in list...
                   layers.splice(layers.length-1, 0, layer);
-                  createMap(layers, overlays, registrationFunctions);
+                  createMap(layers, controls, overlays, registrationFunctions);
 
                 };
 
@@ -250,7 +251,7 @@ app.LayersControl.prototype.setMap = function(map) {
               break;
             }
           }
-          createMap(layers, overlays, registrationFunctions);
+          createMap(layers, controls, overlays, registrationFunctions);
 
         }).appendTo(item);
       }

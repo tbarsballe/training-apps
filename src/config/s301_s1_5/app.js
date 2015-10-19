@@ -21,7 +21,20 @@ var layers = [
       source: new ol.source.MapQuest({layer: 'osm'})
     }),
     getHighlightLayer()
-  ]
+  ];
+var controls = [
+    new app.LayersControl({
+      groups: {
+        background: {
+          title: "Base Layers",
+          exclusive: true
+        },
+        'default': {
+          title: "Overlays"
+        }
+      }
+    })
+  ];
 var overlays = [popup];
 var registrationFunctions = [registerPopup];
 
@@ -35,5 +48,5 @@ ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
 // =========================================================================
 
 $("span.app-title").html("SU301 Section 1.5: Introduction");
-createMap(layers, overlays, registrationFunctions);
+createMap(layers, controls, overlays, registrationFunctions);
 
