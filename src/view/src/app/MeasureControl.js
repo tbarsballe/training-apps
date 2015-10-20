@@ -344,7 +344,8 @@ var getMeasureLayer = function() {
           color: '#ffcc33'
         })
       })
-    })
+    }),
+    meta: true
   });
 
   return vector

@@ -21,7 +21,7 @@
   padding-right: 10px;
 }
 .layers-control ul.group-default span {
-  padding-right: 30px;
+  padding-right: 50px;
 }
 .layers-control ul.group-default li a.link {
   position: absolute;
@@ -39,30 +39,45 @@ div.ul-header {
   background-color: #00A78D;
 }
 a.link {
-  font: 12px;
+  font-size: 12px;
   font-weight: bold;
   float: right;
-  padding: 3px 10px;
+  padding: 0px;
 }
 a.link:hover {
   text-decoration: none;
   cursor:pointer;
 }
 a.link-add {
-  margin-top: -3px;
+  margin-top: -4px;
+  margin-right: 6px;
+  font-size: 16px;
   color: #ffffff;
-  background-color: rgba(92,184,92,0.0);
 }
 a.link-add:hover {
-  background-color: rgba(92,184,92,0.5);
+  color: rgba(112,224,112,1);
 }
 a.link-rm {
+  padding-top: 1px;
+  padding-left: 6px;
+  font-size: 14px;
   color: #000000;
-  background-color: rgba(255,84,84,0.0);
 }
 a.link-rm:hover {
-  background-color: rgba(255,84,84,0.5);
+  color: rgba(180,44,44, 1);
 }
+
+a.link-up {
+  margin-top:0px;
+  margin-right: 20px;
+  font-size: 9px;
+}
+a.link-down {
+  margin-top:9px;
+  margin-right: 20px;
+  font-size: 9px;
+}
+
 .layers-control li {
   padding-left: 10px;
 }

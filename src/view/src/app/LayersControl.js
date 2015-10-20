@@ -98,13 +98,21 @@ app.LayersControl = function(opt_options) {
                   var layer = new ol.layer.Tile({
                     title: title.text(),
                     name: name.text(),
+                    editable: true,
                     source: wmsSource
                   });
 
                   var layers = map.getLayers().getArray();
                   //Insert before the 'highlight' layer
                   //TODO: Fix to insert before all meta layers, based on count in list...
-                  layers.splice(layers.length-1, 0, layer);
+                  
+                  for (var i = layers.length-1; i > 0; i--) {
+                    if (!layers[i].get('meta')) {
+                      //Insert after the last non-meta layer
+                      layers.splice(i+1, 0, layer);
+                      break;
+                    }
+                  }
                   createMap(layers, controls, map.getOverlays(), registrationFunctions);
 
                 };
@@ -149,7 +157,7 @@ app.LayersControl = function(opt_options) {
                     $('<span/>').html(title.text()).appendTo(li).click([group, name, title], addToList).appendTo(li);
                   }
                   li.appendTo(layerList);
-                  
+
                   //todo: nested layer group
                   
                   
@@ -246,13 +254,55 @@ app.LayersControl.prototype.setMap = function(map) {
         } else if (this.containers[this.defaultGroup]) {
           this.containers[this.defaultGroup].appendChild(item);
         }
+      }
+
+      if (layer.get('editable')) {
         //Delete button
-        $('<a class="link link-rm"/>').html('-').click([layer], function(evt) {
+        $('<a class="link link-rm"/>').html('<i class="fa fa-trash-o"/>').click([layer], function(evt) {
           var layer = evt.data[0];
           var layers = map.getLayers().getArray();
           for (var j = 0; j < layers.length; j++) {
             if (layers[j] == layer) {
               layers.splice(j, 1);
+              break;
+            }
+          }
+
+          createMap(layers, controls, map.getOverlays(), registrationFunctions);
+
+        }).appendTo(item);
+        
+        //Sort down
+        $('<a class="link link-down"/>').html('<i class="fa fa-chevron-down"/>').click([layer], function(evt) {
+          var layer = evt.data[0];
+          var layers = map.getLayers().getArray();
+          for (var j = 0; j < layers.length; j++) {
+            if (layers[j] == layer) {
+              if (j < layers.length && !layers[j+1].get('meta')) {
+                //remove from position j
+                layers.splice(j, 1);
+                //add at position j + 1
+                layers.splice(j+1, 0, layer);
+              }
+              break;
+            }
+          }
+
+          createMap(layers, controls, map.getOverlays(), registrationFunctions);
+
+        }).appendTo(item);
+        //Sort up
+        $('<a class="link link-up"/>').html('<i class="fa fa-chevron-up"/>').click([layer], function(evt) {
+          var layer = evt.data[0];
+          var layers = map.getLayers().getArray();
+          for (var j = 0; j < layers.length; j++) {
+            if (layers[j] == layer) {
+              if (j > 0) {
+                //remove from position j
+                layers.splice(j, 1);
+                //add at position j - 1
+                layers.splice(j-1, 0, layer);
+              }
               break;
             }
           }

@@ -129,6 +129,7 @@ var getHighlightLayer = function() {
         width: 3
       })
     }),
+    meta: true,
     source: new ol.source.Vector()
   });
 
