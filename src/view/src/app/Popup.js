@@ -139,11 +139,21 @@ var getHighlightLayer = function() {
   });
   return highlight;
 };
+var showPopup = true;
+
+var setShowPopup = function(state) {
+  showPopup = state;
+}
+
 
 var registerPopup = function(map) {
   // register a single click listener on the map and show a popup
   // based on WMS GetFeatureInfo
   map.on('singleclick', function(evt) {
+    if (!showPopup) {
+      return;
+    }
+
     var viewResolution = map.getView().getResolution();
 
     //Iterate through layers, do a getFeature against each

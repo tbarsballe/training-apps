@@ -107,9 +107,16 @@ app.MeasureControl = function(opt_options) {
     }
     if ($(this).hasClass('measure-active')) {
       $('.measure-line').removeClass('measure-active');
+      if (setShowPopup) {
+        setShowPopup(true);
+      }
     } else {
       $('.measure-line').removeClass('measure-active');
       $('.measure-area').removeClass('measure-active');
+      //Disable feature popup
+      if (setShowPopup) {
+        setShowPopup(false);
+      }
 
       $(this).addClass('measure-active');
       addInteraction(map, 'LineString');
@@ -121,9 +128,16 @@ app.MeasureControl = function(opt_options) {
     }
     if ($(this).hasClass('measure-active')) {
       $('.measure-area').removeClass('measure-active');
+      if (setShowPopup) {
+        setShowPopup(true);
+      }
     } else {
       $('.measure-line').removeClass('measure-active');
       $('.measure-area').removeClass('measure-active');
+      //Disable feature popup
+      if (setShowPopup) {
+        setShowPopup(false);
+      }
 
       $(this).addClass('measure-active');
       addInteraction(map, 'Polygon');

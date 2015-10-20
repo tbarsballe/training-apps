@@ -24,8 +24,7 @@ var layers = [
       title: 'MapQuest Street Map',
       group: "background",
       source: new ol.source.MapQuest({layer: 'osm'})
-    }),
-    getHighlightLayer()
+    })
   ];
 var controls = [
     new app.LayersControl({
@@ -40,8 +39,8 @@ var controls = [
       }
     })
   ];
-var overlays = [popup];
-var registrationFunctions = [registerPopup];
+var overlays = [];
+var registrationFunctions = [];
 
 
 // override the axis orientation for WMS GetFeatureInfo
