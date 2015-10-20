@@ -23,9 +23,17 @@
       <fileset dir="src/config/s301_s5_3_1" includes="app.js"/>
     </copy>
   </target>
+
   <target name="build-s301_s5_3_2" description="builds S301 S5.3 (Layers) training app" depends="prebuild">
-    
+    <mkdir dir="build/s301_s5_3_2"/>
+    <copy todir="build/s301_s5_3_2">
+      <fileset dir="src/view" includes="**/*"/>
+    </copy>
+    <copy todir="build/s301_s5_3_2/src/app" overwrite="true">
+      <fileset dir="src/config/s301_s5_3_2" includes="app.js"/>
+    </copy>
   </target>
+  
   <target name="build-s301_s5_4" description="builds S301 S1.5 training app" depends="prebuild">
     
   </target>

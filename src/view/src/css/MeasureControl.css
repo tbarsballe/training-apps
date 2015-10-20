@@ -1,0 +1,56 @@
+.measure-control {
+  border-radius: 5px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: white;
+}
+
+.measure-control div.measure-header {
+  padding: 3px 10px;
+  color: #ffffff;
+  background-color: #00A78D;
+
+  font: 12px;
+  font-weight: bold;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.measure-control div.measure-content > div {
+  padding: 0px 7px;
+
+  margin: 3px 3px;
+
+  font: 12px;
+}
+
+.measure-control div.measure-content > div:hover {
+  text-decoration: none;
+  cursor:pointer;
+
+  background-color: rgba(240,173,78,0.5);
+
+}
+
+.measure-active {
+  background-color: rgba(240,173,78,0.3);
+}
+
+.measure-popup {
+  left: -30px;
+  white-space:nowrap;
+}
+
+.measure-popup div.popup-content {
+  margin-right: 18px;
+}
+
+.measure-popup::before {
+  left:28px;
+}
+
+.measure-popup::after {
+  left:28px;
+}

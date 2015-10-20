@@ -105,7 +105,7 @@ app.LayersControl = function(opt_options) {
                   //Insert before the 'highlight' layer
                   //TODO: Fix to insert before all meta layers, based on count in list...
                   layers.splice(layers.length-1, 0, layer);
-                  createMap(layers, controls, overlays, registrationFunctions);
+                  createMap(layers, controls, map.getOverlays(), registrationFunctions);
 
                 };
 
@@ -149,7 +149,6 @@ app.LayersControl = function(opt_options) {
                     $('<span/>').html(title.text()).appendTo(li).click([group, name, title], addToList).appendTo(li);
                   }
                   li.appendTo(layerList);
-
                   
                   //todo: nested layer group
                   
@@ -190,7 +189,13 @@ ol.inherits(app.LayersControl, ol.control.Control);
 app.LayersControl.prototype.setMap = function(map) {
   ol.control.Control.prototype.setMap.call(this, map);
   var layers = map.getLayers().getArray();
-  //TODO: Add "none" basemap
+
+  //Clear containers
+  for (var container in this.containers) {
+    var lists = $(this.containers[container]).find("li");
+    $(lists).remove();
+  }
+
   var title = "None";
   var group = "background";
   var item = document.createElement('li');
@@ -198,7 +203,7 @@ app.LayersControl.prototype.setMap = function(map) {
     change([map, group], function(evt) {
       var map = evt.data[0];
       var layers = map.getLayers().getArray();
-      for (var i=0, ii=layers.length; i<ii; ++i) {
+      for (var i=0; i<layers.length; i++) {
         if (layers[i].get("group") == evt.data[1]) {
           layers[i].setVisible(false);
         }
@@ -207,7 +212,7 @@ app.LayersControl.prototype.setMap = function(map) {
   $('<span />').html(title).appendTo(item);
   this.containers[group].appendChild(item);
 
-  for (var i=0, ii=layers.length; i < ii; ++i) {
+  for (var i=0; i < layers.length; i++) {
     var layer = layers[i];
     var name = layer.get('name');
     title = layer.get('title');
@@ -220,9 +225,9 @@ app.LayersControl.prototype.setMap = function(map) {
           change([map, layer, group], function(evt) {
             var map = evt.data[0];
             var layers = map.getLayers().getArray();
-            for (var i=0, ii=layers.length; i<ii; ++i) {
-              if (layers[i].get("group") == evt.data[2]) {
-                layers[i].setVisible(false);
+            for (var j=0; j<layers.length; j++) {
+              if (layers[j].get("group") == evt.data[2]) {
+                layers[j].setVisible(false);
               }
             }
             var layer = evt.data[1];
@@ -245,13 +250,14 @@ app.LayersControl.prototype.setMap = function(map) {
         $('<a class="link link-rm"/>').html('-').click([layer], function(evt) {
           var layer = evt.data[0];
           var layers = map.getLayers().getArray();
-          for (var i = 0; i < layers.length; i++) {
-            if (layers[i] == layer) {
-              layers.splice(i, 1);
+          for (var j = 0; j < layers.length; j++) {
+            if (layers[j] == layer) {
+              layers.splice(j, 1);
               break;
             }
           }
-          createMap(layers, controls, overlays, registrationFunctions);
+
+          createMap(layers, controls, map.getOverlays(), registrationFunctions);
 
         }).appendTo(item);
       }
