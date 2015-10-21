@@ -45,3 +45,14 @@
 .ol-popup table {
   margin-bottom: 0px;
 }
+div#popup-content {
+  margin-top: 20px;
+}
+
+.ol-popup .popup-header {
+  position: absolute;
+  top:0px;
+
+  padding: 3px;
+}
+
