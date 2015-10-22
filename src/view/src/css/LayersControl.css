@@ -69,13 +69,18 @@ a.link-rm:hover {
 
 a.link-up {
   margin-top:0px;
-  margin-right: 20px;
+  margin-right: 32px;
   font-size: 9px;
 }
 a.link-down {
   margin-top:9px;
-  margin-right: 20px;
+  margin-right: 32px;
   font-size: 9px;
+}
+a.link-edit {
+  padding-top: 1px;
+  margin-right: 16px;
+  font-size: 14px;
 }
 
 .layers-control li {
@@ -115,4 +120,67 @@ i.fa-folder-open-o:hover, i.fa-folder-o:hover {
 }
 i.fa-folder-o ~ ul {
   display: none;
+}
+
+.draw-control {
+  border-radius: 5px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: white;
+}
+
+.draw-control div.draw-header {
+  padding: 3px 25px 3px 10px;
+  color: #ffffff;
+  background-color: #00A78D;
+
+  font: 12px;
+  font-weight: bold;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.draw-control div.draw-content > div {
+  padding: 0px 7px;
+  margin: 3px 3px;
+  font: 12px;
+}
+
+.draw-control .close-edit {
+  float: right;
+  padding: 3px;
+  margin-right: 5px;
+  font: 12px;
+
+  color: #ffffff;
+}
+
+.draw-control .close-edit:hover {
+  text-decoration: none;
+  color: #ff0000;
+
+  cursor:pointer;  
+}
+
+.draw-control .close-edit:after {
+  content: "✖";
+}
+
+.draw-control div.draw-content > div {
+  padding: 0px 7px;
+  margin: 3px 3px;
+  font: 12px;
+}
+
+.draw-control div.draw-content > div:hover {
+  text-decoration: none;
+  cursor:pointer;
+
+  background-color: rgba(240,173,78,0.5);
+}
+
+.draw-active {
+  background-color: rgba(240,173,78,0.3);
 }

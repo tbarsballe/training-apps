@@ -13,6 +13,7 @@ var app = window.app;
  * @property {string} srsName - The srsName to use (normally the
  * view's projection).
  * @property {string} featureNS - The feature namespace.
+ * @property {string} featurePrefix - The featureType prefix.
  * @property {string} featureType - The name of the featureType.
  * @property {string} url - The url of the Web Feature Service.
  * @property {ol.Map} map - The map to interact with.
@@ -34,6 +35,7 @@ app.TransactionHandler = function(options) {
   this.url_ = options.url;
   this.map_ = options.map;
   this.featureNS_ = options.featureNS;
+  this.featurePrefix_ = options.featurePrefix;
   this.featureType_ = options.featureType;
   this.draw_ = new ol.interaction.Draw({
     source: this.source_,
@@ -111,6 +113,7 @@ app.TransactionHandler.prototype.onSelectRemove_ = function(evt) {
     var node = this.format_.writeTransaction(null, [clone], null, {
       gmlOptions: {srsName: this.srsName_},
       featureNS: this.featureNS_,
+      featurePrefix: this.featurePrefix_,
       featureType: this.featureType_
     });
     $.ajax({
@@ -138,6 +141,7 @@ app.TransactionHandler.prototype.onDrawEnd = function(evt) {
   var node = this.format_.writeTransaction([feature], null, null, {
     gmlOptions: {srsName: this.srsName_},
     featureNS: this.featureNS_,
+    featurePrefix: this.featurePrefix_,
     featureType: this.featureType_
   });
   $.ajax({
@@ -191,7 +195,8 @@ app.TransactionHandler.prototype.deleteSelected = function() {
       if (result === true) {
         var node = this.format_.writeTransaction(null, null, [feature], {
           featureNS: this.featureNS_,
-          featureType: this.featureType_
+          featureType: this.featureType_,
+          featurePrefix: this.featurePrefix_
         });
         $.ajax({
           type: "POST",
@@ -214,4 +219,10 @@ app.TransactionHandler.prototype.deleteSelected = function() {
       }
     }, this));
   }
+};
+
+app.TransactionHandler.prototype.close = function() {
+  this.map_.removeInteraction(this.select_);
+  this.map_.removeInteraction(this.modify_);
+  this.map_.removeInteraction(this.draw_);
 };

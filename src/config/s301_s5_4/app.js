@@ -2,7 +2,9 @@
  * S301 S5.4
  *
  * @require PopupEditable.js
- * @require LayersControl.js
+ * @require LayersEditable.js
+ * @require TransactionHandler.js
+ * @require WFSBBOXLoader.js
  * @require Map.js
  */
 
@@ -25,7 +27,8 @@ var layers = [
       group: "background",
       source: new ol.source.MapQuest({layer: 'osm'})
     }),
-    getHighlightLayer()
+    getHighlightLayer(),
+    getEditLayer()
   ];
 var controls = [
     new app.LayersControl({
@@ -38,7 +41,8 @@ var controls = [
           title: "Overlays"
         }
       }
-    })
+    }),
+    getDrawControl()
   ];
 var overlays = [popup];
 var registrationFunctions = [registerPopup];

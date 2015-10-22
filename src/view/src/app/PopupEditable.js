@@ -119,11 +119,11 @@ app.Popup.prototype.updateContent = function(doSave) {
             success: function(response){
               var result = format.readTransactionResponse(response);
               if (result.transactionSummary.totalUpdated != Object.keys(properties).length) {
-                alert("WFS-T Transaction Failed!");
+                bootbox.alert("There was an error updating the feature attributes");
               }
             },
             error: function(response) {
-              alert("WFS-T Transaction Failed!");
+              alert("Server error");
             }
         });
   }
@@ -251,6 +251,8 @@ var registerPopup = function(map) {
             var ns = $(xml[0].activeElement).attr('xmlns:'+name[0]);
             var format = new ol.format.GML({featureNS: ns, featureType: name[1]});
             var features = format.readFeatures(data);
+
+            //TODO: Do a getFeatureInfo against the featureType to get all possible keys for editing
             
             highlight.getSource().clear();
             if (features && features.length >= 1 && features[0]) {
