@@ -106,7 +106,7 @@ app.LayersControl = function(opt_options) {
                   //Insert before the 'highlight' layer
                   //TODO: Fix to insert before all meta layers, based on count in list...
                   
-                  for (var i = layers.length-1; i > 0; i--) {
+                  for (var i = layers.length-1; i >= 0; i--) {
                     if (!layers[i].get('meta')) {
                       //Insert after the last non-meta layer
                       layers.splice(i+1, 0, layer);
@@ -137,7 +137,7 @@ app.LayersControl = function(opt_options) {
                       if (subLayerName && subLayerName.length) {
                         subLayerName = $(subLayerName[0]);
                       }
-                      var subLayerTitle = $(subLayers[i]).find('Title');
+                      var subLayerTitle = $(subLayers[j]).find('Title');
                       if (subLayerTitle && subLayerTitle.length) {
                         subLayerTitle = $(subLayerTitle[0]);
                       }

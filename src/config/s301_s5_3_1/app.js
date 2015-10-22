@@ -1,7 +1,6 @@
 /**
  * S301 S5.3 - 1
  *
- * @require Popup.js
  * @require LayersControl.js
  * @require Map.js
  */
