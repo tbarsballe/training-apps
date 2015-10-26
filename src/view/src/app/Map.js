@@ -10,6 +10,10 @@
 // 2. default (overlays), which will use checkboxes
 var map = {};
 var createMap = function (layers, controls, overlays, registrationFunctions) {
+  if (map && map.getView) {
+    center = map.getView().getCenter();
+    zoom = map.getView().getZoom();
+  } 
   if (map.getViewport && map.getViewport()) {
     map.getViewport().remove();
   }

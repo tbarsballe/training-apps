@@ -12,6 +12,7 @@ var app = window.app;
  * @property {string} geometryName  - The name of the geometry attribute.
  * @property {string} srsName - The srsName to use (normally the
  * view's projection).
+ * @property {ol.layer.Layer} layer - the WMS layer being edited
  * @property {string} featureNS - The feature namespace.
  * @property {string} featurePrefix - The featureType prefix.
  * @property {string} featureType - The name of the featureType.
@@ -34,6 +35,7 @@ app.TransactionHandler = function(options) {
   this.geometryName_ = options.geometryName;
   this.url_ = options.url;
   this.map_ = options.map;
+  this.layer_ = options.layer;
   this.featureNS_ = options.featureNS;
   this.featurePrefix_ = options.featurePrefix;
   this.featureType_ = options.featureType;
@@ -159,6 +161,10 @@ app.TransactionHandler.prototype.onDrawEnd = function(evt) {
         } else {
           feature.setId(insertId);
         }
+        var wmsSource = this.layer_.getSource();
+        var params = wmsSource.getParams();
+        params.t = new Date().getMilliseconds();
+        wmsSource.updateParams(params);
       }
       this.map_.removeInteraction(this.draw_);
       this.hasDraw_ = false;
@@ -209,6 +215,11 @@ app.TransactionHandler.prototype.deleteSelected = function() {
               if (result.transactionSummary.totalDeleted === 1) {
                 this.select_.getFeatures().clear();
                 this.source_.removeFeature(feature);
+
+                var wmsSource = this.layer_.getSource();
+                var params = wmsSource.getParams();
+                params.t = new Date().getMilliseconds();
+                wmsSource.updateParams(params);
               } else {
                 bootbox.alert("There was an issue deleting the feature.");
               }

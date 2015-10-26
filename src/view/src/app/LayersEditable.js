@@ -380,7 +380,11 @@ app.DrawControl = function(opt_options) {
 ol.inherits(app.DrawControl, ol.control.Control);
 
 app.DrawControl.prototype.setLayer = function(layer) {
-  $(this.element).find('.draw-header').html('Editing: '+layer.get('name'));
+  if (layer) {
+    $(this.element).find('.draw-header').html('Editing: '+layer.get('name'));
+  } else {
+    $(this.element).find('.draw-header').html('Editing: ');
+  }
   this.layer = layer;
 }
 
@@ -441,6 +445,7 @@ var turnOffCursor = function() {
 // delete the selected feature
 var deleteFeature = function() {
   transaction.deleteSelected();
+  
 };
 
 var transaction = {};
@@ -512,6 +517,7 @@ var drawFeature = function(layer) {
         geometryType: geometryType,
         geometryName: geometryName,
         srsName: srsName,
+        layer: layer,
         featureNS: featureNS,
         featurePrefix: featurePrefix,
         featureType: featureType,
