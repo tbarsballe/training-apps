@@ -45,6 +45,6 @@ var proj = new ol.proj.Projection({
 ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
 // =========================================================================
 
-$("span.app-title").html("SU301 Section 1.5: Introduction");
+$("span.app-title").html("SU301 Section 1.5: Basemaps");
 createMap(layers, controls, overlays, registrationFunctions);
 

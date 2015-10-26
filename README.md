@@ -10,6 +10,6 @@ The core application code is shared between several application configurations. 
 ```
 build.xml   - Ant build script for the project, used to combine the application configuration with the core application code. Applications built thi way are coppied to the build/ directory.
 src/
- +- config/ - App configurations for each of the six training apps
- +- view/   - Core code for the view application
+ +- config/ - App configurations for each of the five training apps
+ +- lib/   - Core code for the application
 ```

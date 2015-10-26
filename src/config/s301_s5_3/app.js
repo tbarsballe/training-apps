@@ -53,7 +53,7 @@ var proj = new ol.proj.Projection({
 ol.proj.addEquivalentProjections([ol.proj.get('EPSG:4326'), proj]);
 // =========================================================================
 
-$("span.app-title").html("SU301 Section 5.3: Layers");
+$("span.app-title").html("SU301 Section 5.3: Map Layers");
 createMap(layers, controls, overlays, registrationFunctions);
 
 
