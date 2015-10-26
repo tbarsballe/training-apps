@@ -1,43 +1,33 @@
 <!-- Ant build file. Copy app.js from config -->
 <project name="training-app" default="build">
 
-  <target name="build" depends="build-s301_s1_5, build-s301_s5_3_1, build-s301_s5_3_2, build-s301_s5_4, build-s301_s5_7, build-s302_s4_6, build-s301_s1_5" description="builds all apps">
+  <target name="build" depends="build-s301_s1_5, build-s301_s5_3, build-s301_s5_4, build-s301_s5_7, build-s302_s4_6, build-s301_s1_5" description="builds all apps">
   </target>
 
   <target name="build-s301_s1_5" description="builds S301 S1.5 training app" depends="prebuild">
     <mkdir dir="build/s301_s1_5"/>
     <copy todir="build/s301_s1_5">
-      <fileset dir="src/view" includes="**/*"/>
+      <fileset dir="src/lib" includes="**/*"/>
     </copy>
     <copy todir="build/s301_s1_5/src/app" overwrite="true">
       <fileset dir="src/config/s301_s1_5" includes="app.js"/>
     </copy>
   </target>
 
-  <target name="build-s301_s5_3_1" description="builds S301 S5.3 (Basemap) training app" depends="prebuild">
-    <mkdir dir="build/s301_s5_3_1"/>
-    <copy todir="build/s301_s5_3_1">
-      <fileset dir="src/view" includes="**/*"/>
+  <target name="build-s301_s5_3" description="builds S301 S5.3 (Layers) training app" depends="prebuild">
+    <mkdir dir="build/s301_s5_3"/>
+    <copy todir="build/s301_s5_3">
+      <fileset dir="src/lib" includes="**/*"/>
     </copy>
-    <copy todir="build/s301_s5_3_1/src/app" overwrite="true">
-      <fileset dir="src/config/s301_s5_3_1" includes="app.js"/>
-    </copy>
-  </target>
-
-  <target name="build-s301_s5_3_2" description="builds S301 S5.3 (Layers) training app" depends="prebuild">
-    <mkdir dir="build/s301_s5_3_2"/>
-    <copy todir="build/s301_s5_3_2">
-      <fileset dir="src/view" includes="**/*"/>
-    </copy>
-    <copy todir="build/s301_s5_3_2/src/app" overwrite="true">
-      <fileset dir="src/config/s301_s5_3_2" includes="app.js"/>
+    <copy todir="build/s301_s5_3/src/app" overwrite="true">
+      <fileset dir="src/config/s301_s5_3" includes="app.js"/>
     </copy>
   </target>
   
   <target name="build-s301_s5_4" description="builds S301 S5.4 training app" depends="prebuild">
     <mkdir dir="build/s301_s5_4"/>
     <copy todir="build/s301_s5_4">
-      <fileset dir="src/view" includes="**/*"/>
+      <fileset dir="src/lib" includes="**/*"/>
     </copy>
     <copy todir="build/s301_s5_4/src/app" overwrite="true">
       <fileset dir="src/config/s301_s5_4" includes="app.js"/>
