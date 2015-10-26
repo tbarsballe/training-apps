@@ -273,32 +273,53 @@ var registerPopup = function(map) {
                 popup.setEditing(false);
               }).appendTo(menubar);
 
+              //Get FID
+              $('<div class="feature-info-fid"/>').html('Feature&nbspID:&nbsp'+feature.getId()).appendTo(menubar);
+
               $(menubar).appendTo(body);
               
               var values = feature.getProperties();
               var hasContent = false;
               var html = '';
-              for (var key in values) {
-                //TODO: Make fields editable
-                if (key !== 'the_geom' && key !== 'boundedBy') {
 
-                  html += '<tr><td><span class="feature-info-key">' + key + '</span></td>'+
-                          '<td><span class="feature-info-static">' + values[key] + '</span>'+
-                          '<input type="text" class="feature-info-edit" value="' + values[key] + '"></input></td></tr>';
-                  hasContent = true;
-                }
-              }
-              var table = $('<table class="popup-body feature-info-table table table-striped table-bordered table-condensed">').html(html);
-              $(table).appendTo(body);
+              /* TODO Do a getfeatureinfo for keys, use all keys, empty if not in values*/
+              //Do WFS describeFeatureType
+              $.ajax({
+                url: window.url+'service=WFS&request=DescribeFeatureType&version=1.1.0&typename='+urls[index].layer.get('name'),
+                success: function(data) {
+                  var xml = $(data);
+                  var elements = $(xml).find('xsd\\:complexType xsd\\:element');
+
+                  var keys = [];
+                  for (var i = 0; i < elements.length; i++) {
+                    var key = $(elements[i]).attr('name');
+                    var value = '';
+                    /**/
+                    if (values[key]) {
+                      value = values[key];
+                    }
+
+                    if (key !== 'the_geom' && key !== 'boundedBy') {
+
+                      html += '<tr><td><div class="feature-info-key">' + key + '</div></td>'+
+                              '<td><div class="feature-info-static">' + value + '</div>'+
+                              '<input type="text" class="feature-info-edit" value="' + value + '"></input></td></tr>';
+                      hasContent = true;
+                    }
+                  }
+                  var table = $('<table class="popup-body feature-info-table table table-striped table-bordered table-condensed">').html(html);
+                  $(table).appendTo(body);
 
 
-              if (hasContent === true) {
-                popup.setPosition(evt.coordinate);
-                popup.setContent(body);
-                popup.setFeature(ns, name[0], name[1], feature);
-                popup.setEditing(false);
-                popup.show();
-              }
+                  if (hasContent === true) {
+                    popup.setPosition(evt.coordinate);
+                    popup.setContent(body);
+                    popup.setFeature(ns, name[0], name[1], feature);
+                    popup.setEditing(false);
+                    popup.show();
+                  }
+                }});
+              /*** ***/
               feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
               highlight.getSource().addFeature(feature);
             } else {
