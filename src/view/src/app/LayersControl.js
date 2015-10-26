@@ -220,7 +220,7 @@ app.LayersControl.prototype.setMap = function(map) {
   $('<span />').html(title).appendTo(item);
   this.containers[group].appendChild(item);
 
-  for (var i=0; i < layers.length; i++) {
+  for (var i=layers.length-1; i >= 0; i--) {
     var layer = layers[i];
     var name = layer.get('name');
     title = layer.get('title');
@@ -272,8 +272,8 @@ app.LayersControl.prototype.setMap = function(map) {
 
         }).appendTo(item);
         
-        //Sort down
-        $('<a class="link link-down"/>').html('<i class="fa fa-chevron-down"/>').click([layer], function(evt) {
+        //Sort up
+        $('<a class="link link-up"/>').html('<i class="fa fa-chevron-up"/>').click([layer], function(evt) {
           var layer = evt.data[0];
           var layers = map.getLayers().getArray();
           for (var j = 0; j < layers.length; j++) {
@@ -291,8 +291,8 @@ app.LayersControl.prototype.setMap = function(map) {
           createMap(layers, controls, map.getOverlays(), registrationFunctions);
 
         }).appendTo(item);
-        //Sort up
-        $('<a class="link link-up"/>').html('<i class="fa fa-chevron-up"/>').click([layer], function(evt) {
+        //Sort down
+        $('<a class="link link-down"/>').html('<i class="fa fa-chevron-down"/>').click([layer], function(evt) {
           var layer = evt.data[0];
           var layers = map.getLayers().getArray();
           for (var j = 0; j < layers.length; j++) {

@@ -17,9 +17,21 @@
 .layers-control ul:first-of-type div.ul-header a.link {
   border-top-right-radius: 5px;
 }
+.layers-control ul.group-background {
+  border-top: 2px dashed #dddddd;
+}
+
+.layers-control ul.group-background div.ul-header {
+  color: #444444;
+  background-color: #eeeeee;
+}
+.layers-control ul.group-background {
+  background-color: #eeeeee;
+}
 .layers-control ul.group-background li {
   padding-right: 10px;
 }
+
 .layers-control ul.group-default span {
   padding-right: 50px;
 }

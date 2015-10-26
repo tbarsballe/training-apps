@@ -33,12 +33,12 @@ var layers = [
 var controls = [
     new app.LayersControl({
       groups: {
-        background: {
-          title: "Base Layers",
-          exclusive: true
-        },
         'default': {
-          title: "Overlays"
+          title: "Layers"
+        },
+        'background': {
+          title: "Basemap",
+          exclusive: true
         }
       }
     }),
