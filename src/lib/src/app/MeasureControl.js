@@ -107,14 +107,14 @@ app.MeasureControl = function(opt_options) {
     }
     if ($(this).hasClass('measure-active')) {
       $('.measure-line').removeClass('measure-active');
-      if (setShowPopup) {
+      if (window.setShowPopup) {
         setShowPopup(true);
       }
     } else {
       $('.measure-line').removeClass('measure-active');
       $('.measure-area').removeClass('measure-active');
       //Disable feature popup
-      if (setShowPopup) {
+      if (window.setShowPopup) {
         setShowPopup(false);
       }
 
@@ -128,14 +128,14 @@ app.MeasureControl = function(opt_options) {
     }
     if ($(this).hasClass('measure-active')) {
       $('.measure-area').removeClass('measure-active');
-      if (setShowPopup) {
+      if (window.setShowPopup) {
         setShowPopup(true);
       }
     } else {
       $('.measure-line').removeClass('measure-active');
       $('.measure-area').removeClass('measure-active');
       //Disable feature popup
-      if (setShowPopup) {
+      if (window.setShowPopup) {
         setShowPopup(false);
       }
 
