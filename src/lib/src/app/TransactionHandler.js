@@ -127,6 +127,10 @@ app.TransactionHandler.prototype.onSelectRemove_ = function(evt) {
         var result = this.readResponse(data);
         if (result && result.transactionSummary.totalUpdated === 1) {
           delete this.dirty_[fid];
+          var wmsSource = this.layer_.getSource();
+          var params = wmsSource.getParams();
+          params.t = new Date().getMilliseconds();
+          wmsSource.updateParams(params);
         }
       },
       context: this
