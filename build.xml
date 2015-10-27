@@ -4,7 +4,7 @@
   <target name="build" depends="build-s301_s1_5, build-s301_s5_3, build-s301_s5_4, build-s301_s5_7, build-s302_s4_6, build-s301_s1_5" description="builds all apps">
   </target>
 
-  <target name="build-s301_s1_5" description="builds S301 S1.5 training app" depends="prebuild">
+  <target name="build-s301_s1_5" description="builds S301 S1.5 (Basemap) training app" depends="prebuild">
     <mkdir dir="build/s301_s1_5"/>
     <copy todir="build/s301_s1_5">
       <fileset dir="src/lib" includes="**/*"/>
@@ -24,7 +24,7 @@
     </copy>
   </target>
   
-  <target name="build-s301_s5_4" description="builds S301 S5.4 training app" depends="prebuild">
+  <target name="build-s301_s5_4" description="builds S301 S5.4 (Features) training app" depends="prebuild">
     <mkdir dir="build/s301_s5_4"/>
     <copy todir="build/s301_s5_4">
       <fileset dir="src/lib" includes="**/*"/>
@@ -34,10 +34,17 @@
     </copy>
   </target>
 
-  <target name="build-s301_s5_7" description="builds S301 S1.5 training app" depends="prebuild">
-    
+  <target name="build-s301_s5_7" description="builds S301 S5.7 (Styles) training app" depends="prebuild">
+    <mkdir dir="build/s301_s5_7"/>
+    <copy todir="build/s301_s5_7">
+      <fileset dir="src/lib" includes="**/*"/>
+    </copy>
+    <copy todir="build/s301_s5_7/src/app" overwrite="true">
+      <fileset dir="src/config/s301_s5_7" includes="app.js"/>
+    </copy>
   </target>
-  <target name="build-s302_s4_6" description="builds S301 S1.5 training app" depends="prebuild">
+
+  <target name="build-s302_s4_6" description="builds S302 S4.6 (Web Services) training app" depends="prebuild">
     
   </target>
   <target name="prebuild" description="create build dir">
