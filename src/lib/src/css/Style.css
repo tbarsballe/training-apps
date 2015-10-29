@@ -54,8 +54,12 @@
   margin-left: 5px;
   margin-right: 10px;
 }
-.style-control .style-rule .input-rgba {
-  width: 40px;
+.style-control .style-rule input.input-hex {
+  width: 60px;
+  margin-left: 0px;
+}
+.style-control .style-rule input.input-a {
+  width: 30px;
 }
 
 .style-control div.style-header {

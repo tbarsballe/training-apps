@@ -176,44 +176,56 @@ app.StyleControl = function(opt_options) {
     var fill = $('<div><span class="rule-row-label">Fill:</span></div>');
 
     var parseRGB = function(val) {
-      return Math.round(Number(val.replace(/[^\d]+/g,'')));
+      return val.replace(/[^0-9A-Fa-f]+/g,'');
     };
+    var hexToRGB = function(val) {
+      if (val.length == 6) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(val);
+        return result ? 
+          {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+          } : null;
+      } else if (val.length == 3) {
+        var result = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(val);
+        return result ? 
+          {
+            r: parseInt(result[1]+result[1], 16),
+            g: parseInt(result[2]+result[2], 16),
+            b: parseInt(result[3]+result[3], 16)
+          } : null;
+      }
+    };
+
     var parseAlpha = function(val) {
       return Number(val.replace(/[^\d\.]+/g,''));
     };
 
-    $('<span>R:</span>').appendTo(fill);
-    $('<input id="fill-r-'+id+'" class="input-rgba" type="text" min="0" max="255" value="0"/>').change([], function() {
+    $('<span>#</span>').appendTo(fill);
+    $('<input id="fill-hex-'+id+'" class="input-hex" type="text" maxlength="6" value="000000"/>').change([], function() {
 
       var val = parseRGB($(this).val());
       $(this).val(val);
-      rules[id].fill.r=val;
+      var rgb = hexToRGB(val)
+      if (rgb) {
+        rules[id].fill.r=rgb.r;
+        rules[id].fill.g=rgb.g;
+        rules[id].fill.b=rgb.b;
+        $(this).css('background-color', '#'+val);
+        if (rgb.r+rgb.g+rgb.b < 256) {
+          $(this).css('color', '#FFF');
+        } else {
+          $(this).css('color', '#000');
+        }
+      }
       updateIcon();
       updateLayer();
 
-    }).appendTo(fill);
-    $('<span>G:</span>').appendTo(fill);
-    $('<input id="fill-g-'+id+'" class="input-rgba" type="text" min="0" max="255" value="0"/>').change([], function() {
-
-      var val = parseRGB($(this).val());
-      $(this).val(val);
-      rules[id].fill.g=val;
-      updateIcon();
-      updateLayer();
-
-    }).appendTo(fill);
-    $('<span>B:</span>').appendTo(fill);
-    $('<input id="fill-b-'+id+'" class="input-rgba" type="text" min="0" max="255" value="0"/>').change([], function() {
-
-      var val = parseRGB($(this).val());
-      $(this).val(val);
-      rules[id].fill.b=val;
-      updateIcon();
-      updateLayer();
-
-    }).appendTo(fill);
-    $('<span>A:</span>').appendTo(fill);
-    $('<input id="fill-a-'+id+'" class="input-rgba" type="text" min="0" max="1" value="0.0"/>').change([], function() {
+    }).css('background-color', '#000').css('color', '#FFF').appendTo(fill);
+    
+    $('<span>Alpha:</span>').appendTo(fill);
+    $('<input id="fill-a-'+id+'" class="input-a" type="text" min="0" max="1" value="0.0"/>').change([], function() {
 
       var val = parseAlpha($(this).val());
       $(this).val(val);
@@ -227,38 +239,29 @@ app.StyleControl = function(opt_options) {
 
     var stroke = $('<div><span class="rule-row-label">Stroke:</span></div>');
 
-    $('<span>R:</span>').appendTo(stroke);
-    $('<input id="stroke-r-'+id+'" class="input-rgba" type="text" min="0" max="255" value="0"/>').change([], function() {
+    $('<span>#</span>').appendTo(stroke);
+    $('<input id="stroke-hex-'+id+'" class="input-hex" type="text" maxlength="6" value="000000"/>').change([], function() {
 
       var val = parseRGB($(this).val());
       $(this).val(val);
-      rules[id].stroke.r=val;
+      var rgb = hexToRGB(val)
+      if (rgb) {
+        rules[id].stroke.r=rgb.r;
+        rules[id].stroke.g=rgb.g;
+        rules[id].stroke.b=rgb.b;
+        $(this).css('background-color', '#'+val);
+        if (rgb.r+rgb.g+rgb.b < 256) {
+          $(this).css('color', '#FFF');
+        } else {
+          $(this).css('color', '#000');
+        }
+      }
       updateIcon();
       updateLayer();
 
-    }).appendTo(stroke);
-    $('<span>G:</span>').appendTo(stroke);
-    $('<input id="stroke-g-'+id+'" class="input-rgba" type="text" min="0" max="255" value="0"/>').change([], function() {
-
-      var val = parseRGB($(this).val());
-      $(this).val(val);
-      rules[id].stroke.g=val;
-      updateIcon();
-      updateLayer();
-
-    }).appendTo(stroke);
-    $('<span>B:</span>').appendTo(stroke);
-    $('<input id="stroke-b-'+id+'" class="input-rgba" id="stroke-r-'+id+'" type="text" min="0" max="255" value="0"/>').change([], function() {
-
-      var val = parseRGB($(this).val());
-      $(this).val(val);
-      rules[id].stroke.b=val;
-      updateIcon();
-      updateLayer();
-
-    }).appendTo(stroke);
-    $('<span>A:</span>').appendTo(stroke);
-    $('<input id="stroke-a-'+id+'" class="input-rgba" type="text" min="0" max="1" value="1.0"/>').change([], function() {
+    }).css('background-color', '#000').css('color', '#FFF').appendTo(stroke);
+    $('<span>Alpha:</span>').appendTo(stroke);
+    $('<input id="stroke-a-'+id+'" class="input-a" type="text" min="0" max="1" value="1.0"/>').change([], function() {
 
       var val = parseAlpha($(this).val());
       $(this).val(val);
