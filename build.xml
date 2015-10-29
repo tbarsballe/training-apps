@@ -45,7 +45,13 @@
   </target>
 
   <target name="build-s302_s4_6" description="builds S302 S4.6 (Web Services) training app" depends="prebuild">
-    
+    <mkdir dir="build/s302_s4_6"/>
+    <copy todir="build/s302_s4_6">
+      <fileset dir="src/lib" includes="**/*"/>
+    </copy>
+    <copy todir="build/s302_s4_6/src/app" overwrite="true">
+      <fileset dir="src/config/s302_s4_6" includes="app.js"/>
+    </copy>
   </target>
   <target name="prebuild" description="create build dir">
     <mkdir dir="build"/>

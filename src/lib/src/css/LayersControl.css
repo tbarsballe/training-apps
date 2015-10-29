@@ -4,6 +4,7 @@
   right: 10px;
   bottom: 10px;
   background-color: white;
+  min-width: 100px;
 }
 .layers-control ul {
   font-weight: bold;

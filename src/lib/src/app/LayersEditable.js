@@ -116,6 +116,9 @@ app.LayersControl = function(opt_options) {
                       break;
                     }
                   }
+                  if (layers.length == 0) {
+                    layers = [layer];
+                  }
                   createMap(layers, controls, map.getOverlays(), registrationFunctions);
 
                 };
