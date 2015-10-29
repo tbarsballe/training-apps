@@ -12,6 +12,12 @@
     <copy todir="build/s301_s1_5/src/app" overwrite="true">
       <fileset dir="src/config/s301_s1_5" includes="app.js"/>
     </copy>
+
+    <exec executable="suite-sdk" failonerror="true">
+       <arg line="package"/>
+       <arg line="build/s301_s1_5"/>
+       <arg line="build"/>
+    </exec>
   </target>
 
   <target name="build-s301_s5_3" description="builds S301 S5.3 (Layers) training app" depends="prebuild">
@@ -22,6 +28,12 @@
     <copy todir="build/s301_s5_3/src/app" overwrite="true">
       <fileset dir="src/config/s301_s5_3" includes="app.js"/>
     </copy>
+
+    <exec executable="suite-sdk" failonerror="true">
+       <arg line="package"/>
+       <arg line="build/s301_s5_3"/>
+       <arg line="build"/>
+    </exec>
   </target>
   
   <target name="build-s301_s5_4" description="builds S301 S5.4 (Features) training app" depends="prebuild">
@@ -32,6 +44,12 @@
     <copy todir="build/s301_s5_4/src/app" overwrite="true">
       <fileset dir="src/config/s301_s5_4" includes="app.js"/>
     </copy>
+
+    <exec executable="suite-sdk" failonerror="true">
+       <arg line="package"/>
+       <arg line="build/s301_s5_4"/>
+       <arg line="build"/>
+    </exec>
   </target>
 
   <target name="build-s301_s5_7" description="builds S301 S5.7 (Styles) training app" depends="prebuild">
@@ -42,6 +60,12 @@
     <copy todir="build/s301_s5_7/src/app" overwrite="true">
       <fileset dir="src/config/s301_s5_7" includes="app.js"/>
     </copy>
+
+    <exec executable="suite-sdk" failonerror="true">
+       <arg line="package"/>
+       <arg line="build/s301_s5_7"/>
+       <arg line="build"/>
+    </exec>
   </target>
 
   <target name="build-s302_s4_6" description="builds S302 S4.6 (Web Services) training app" depends="prebuild">
@@ -52,6 +76,12 @@
     <copy todir="build/s302_s4_6/src/app" overwrite="true">
       <fileset dir="src/config/s302_s4_6" includes="app.js"/>
     </copy>
+
+    <exec executable="suite-sdk" failonerror="true">
+       <arg line="package"/>
+       <arg line="build/s302_s4_6"/>
+       <arg line="build"/>
+    </exec>
   </target>
   <target name="prebuild" description="create build dir">
     <mkdir dir="build"/>
